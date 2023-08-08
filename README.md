@@ -42,7 +42,7 @@
     - Параметры: `username`, `email`, `password`
     - Возвращаемый формат данных: JSON
     - Пример запроса:
-      ```
+      ```json
       {
           "username": "user123",
           "email": "user@example.com",
@@ -50,7 +50,7 @@
       }
       ```
     - Пример ответа:
-      ```
+      ```json
       {
           "message": "User registered successfully."
       }
@@ -62,14 +62,14 @@
     - Параметры: `username`, `password`
     - Возвращаемый формат данных: JSON
     - Пример запроса:
-      ```
+      ```json
       {
           "username": "user123",
           "password": "securepassword"
       }
       ```
     - Пример ответа:
-      ```
+      ```json
       {
           "token": "your_token_here"
       }
