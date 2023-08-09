@@ -26,9 +26,10 @@ class UserLoginView(generics.GenericAPIView):
 
         refresh = RefreshToken.for_user(user)
         data = {
+            "message": "You are successfully logged in.",
             "user": UserSerializer(instance=user, context={"request": request}).data,
-            "refresh": str(refresh),
-            "access": str(refresh.access_token),
+            "refresh_token": str(refresh),
+            "access_token": str(refresh.access_token),
         }
         return response.Response(data=data, status=status.HTTP_200_OK)
 
@@ -44,8 +45,9 @@ class UserRegistrationView(generics.GenericAPIView):
         user = serializer.save()
         refresh = RefreshToken.for_user(user)
         data = {
+            "message": "User registered successfully.",
             "user": UserSerializer(instance=user, context={"request": request}).data,
-            "refresh": str(refresh),
-            "access": str(refresh.access_token),
+            "refresh_token": str(refresh),
+            "access_token": str(refresh.access_token),
         }
         return response.Response(data=data, status=status.HTTP_201_CREATED)
