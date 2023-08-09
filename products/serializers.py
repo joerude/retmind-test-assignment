@@ -10,10 +10,10 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             "id",
-            "category",
-            "tags",
             "name",
             "description",
+            "category_name",
             "price",
+            "tags",
             "created_at",
         ]
