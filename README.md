@@ -157,6 +157,16 @@ cd retmind-test-assignment
 docker-compose up --build
 ```
 
+#### Документация API
+
+OpenAPI (Swagger) по API доступен по адресу:
+http://0.0.0.0:8000/api/schema/swagger-ui/#
+
+**Важно**
+
+Для доступа к API, требующим аутентификации, необходимо в заголовке запроса
+передавать токен (access-token) в формате: Authorization: Bearer `<token>`.
+
 ### Отчёт
 
 #### Механизм кеширования
@@ -198,12 +208,3 @@ docker-compose up --build
 времени выполнения.
 ![sql_queries_after.png](assets/sql_queries_after.png)
 
-#### Документация API
-
-OpenAPI (Swagger) по API доступен по адресу:
-http://0.0.0.0:8000/api/schema/swagger-ui/#
-
-**Важно**
-
-Для доступа к API, требующим аутентификации, необходимо в заголовке запроса
-передавать токен (access-token) в формате: Authorization: Bearer `<token>`.
