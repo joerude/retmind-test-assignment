@@ -1,3 +1,4 @@
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from .models import User
@@ -10,15 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "email",
             "username",
-            # "phone",
-            # "first_name",
-            # "last_name",
-            # "middle_name",
-            # "date_joined",
-            # "last_login",
-            # "role",
         ]
-        # read_only_fields = ["id", "role", "date_joined", "last_login"]
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -31,8 +24,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         ]
         extra_kwargs = {"password": {"write_only": True}}
 
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
     def create(self, validated_data):
-        print(validated_data)
         user = User.objects.create_user(**validated_data)
         return user
 
@@ -40,8 +36,3 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True, allow_blank=False, allow_null=False)
     password = serializers.CharField(required=True, allow_blank=False, allow_null=False)
-
-
-class LogoutSerializer(serializers.Serializer):
-    access_token = serializers.CharField(required=True, allow_blank=False, allow_null=False)
-    refresh_token = serializers.CharField(required=True, allow_blank=False, allow_null=False)
