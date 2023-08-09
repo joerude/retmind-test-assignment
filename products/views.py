@@ -3,7 +3,6 @@ import openpyxl
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 
 from django.core.cache import cache
 from django.http import HttpResponse
@@ -21,7 +20,12 @@ class ProductListView(generics.ListAPIView):
 
         if cached_products is None:
             print("Fetching products from the database")
-            products = Product.objects.order_by('-created_at')
+            products = (
+                Product.objects
+                .select_related('category')
+                .prefetch_related('tags')
+                .order_by('-created_at')
+            )
             serializer = self.serializer_class(products, many=True)
             cache.set('product_list', serializer.data)
             return products
@@ -36,11 +40,17 @@ class ProductListView(generics.ListAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ProductExportView(APIView):
+class ProductExportView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        products = Product.objects.all()
+        products = (
+            Product.objects
+            .select_related('category')
+            .prefetch_related('tags')
+            .all()
+        )
+
         serializer = ProductSerializer(products, many=True)
 
         workbook = openpyxl.Workbook()
