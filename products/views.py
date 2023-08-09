@@ -1,10 +1,11 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Product
-from .serializers import ProductSerializer
 
 from django.core.cache import cache
+
+from .models import Product
+from .serializers import ProductSerializer
 
 
 class ProductListView(generics.ListAPIView):
@@ -15,10 +16,13 @@ class ProductListView(generics.ListAPIView):
         cached_products = cache.get('product_list')
 
         if cached_products is None:
-            products = Product.objects.all()
+            print("Fetching products from the database")
+            products = Product.objects.order_by('-created_at')
             serializer = self.serializer_class(products, many=True)
             cache.set('product_list', serializer.data)
             return products
+        else:
+            print("Fetching products from the cache")
 
         return cached_products
 
