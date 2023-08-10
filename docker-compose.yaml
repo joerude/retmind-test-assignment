@@ -1,5 +1,15 @@
 version: "3"
 services:
+  web:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
   db:
     image: postgres:14.0-alpine
     restart: always
@@ -23,20 +33,6 @@ services:
     container_name: redis
     env_file:
       - .env
-
-  web:
-    build: .
-    command: >
-      bash -c "python manage.py migrate &&
-               python manage.py runserver 0.0.0.0:8000"
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-      - redis
-
 
 volumes:
   postgres_data:
