@@ -238,4 +238,4 @@ http://0.0.0.0:8000/api/schema/swagger-ui/#
 При возникновении ошибок или вопросов - обращайтесь:
 
 - по почте: zh.akynov@gmail.com
-- телеграм: [@joerude](t.me/joerude)
+- телеграм: [@joerude](https://t.me/joerude)
